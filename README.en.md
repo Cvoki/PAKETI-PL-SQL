@@ -8,7 +8,7 @@
 
 Four packages I ended up rewriting on almost every project, finally gathered in one place. Logging, small helper functions, working with JSON columns, and pagination.
 
-No dependencies — just an Oracle database.
+No dependencies - just an Oracle database.
 
 ---
 
@@ -16,7 +16,7 @@ No dependencies — just an Oracle database.
 
 | Package | What it's for |
 |---|---|
-| **`pkg_log`** | Logging in an autonomous transaction — the record survives even when the main transaction rolls back |
+| **`pkg_log`** | Logging in an autonomous transaction - the record survives even when the main transaction rolls back |
 | **`pkg_util`** | Slugs, diacritic stripping, email and national ID validation, working days, relative time |
 | **`pkg_json_helper`** | Adding, updating and removing elements of a JSON array held in a `CLOB` column |
 | **`pkg_paging`** | Pagination and search over dynamic SQL, with injection guards |
@@ -29,7 +29,7 @@ sqlplus user/password@database @install.sql
 
 The script creates the `app_log` table (through `pkg_log`), compiles all four packages and prints the status.
 
-**Requires:** Oracle 12.2 or newer — `pkg_json_helper` uses `JSON_ARRAY_T` and `JSON_OBJECT_T`.
+**Requires:** Oracle 12.2 or newer - `pkg_json_helper` uses `JSON_ARRAY_T` and `JSON_OBJECT_T`.
 
 ## Examples
 
@@ -54,7 +54,7 @@ Why an autonomous transaction: when a job fails and rolls back, the log stays. W
 ### Helper functions
 
 ```sql
-SELECT pkg_util.slug('Košulja plava — veličina M')  FROM dual;  -- kosulja-plava-velicina-m
+SELECT pkg_util.slug('Košulja plava - veličina M')  FROM dual;  -- kosulja-plava-velicina-m
 SELECT pkg_util.velicina(1572864)                    FROM dual;  -- 1,5 MB
 SELECT pkg_util.radni_dani(DATE '2026-08-01', DATE '2026-08-31') FROM dual;  -- 21
 SELECT pkg_util.relativno(SYSDATE - 3)               FROM dual;  -- prije 3 dana
@@ -115,14 +115,14 @@ END;
 
 ## Notes
 
-- `pkg_log.ocisti(30)` deletes records older than thirty days — worth attaching to `DBMS_SCHEDULER`.
+- `pkg_log.ocisti(30)` deletes records older than thirty days - worth attaching to `DBMS_SCHEDULER`.
 - `pkg_util.je_jmbg` validates the checksum digit by the official formula, not just the length.
 - Messages in `pkg_util.relativno` are in Serbian; if you need another language, that's the only function to touch.
 
 ## License
 
-MIT — use it, change it, ship it.
+MIT - use it, change it, ship it.
 
 ---
 
-<sub><a href="https://github.com/Cvoki">Luka Cvoro</a> — <a href="mailto:lukac95@gmail.com">lukac95@gmail.com</a></sub>
+<sub><a href="https://github.com/Cvoki">Luka Cvoro</a> - <a href="mailto:lukac95@gmail.com">lukac95@gmail.com</a></sub>
